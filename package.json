@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "testrpc": "testrpc -a 4 -l 24000000 -m "\"lion salon open vague century present frown hungry siren return early custom\""
+    "testrpc": "testrpc -a 4 -l 24000000 -m 'lion salon open vague century present frown hungry siren return early custom'"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
