@@ -10,7 +10,7 @@ contract DebtManager {
         uint id;
         string details;
         address moneyHolderAccount; // TODO:Name ??
-        bool isFinilized;
+        bool isFinalized;
         address owner;
 
     }
@@ -87,12 +87,12 @@ contract DebtManager {
     function getOrderById(uint orderId) constant returns( uint id,
                                                           string details,
                                                           address moneyHolderAccount,
-                                                          bool isFinilized,
+                                                          bool isFinalized,
                                                           address owner){
 
         Order order = orderArr[orderId];
 
-        return(order.id, order.details, order.moneyHolderAccount, order.isFinilized, order.owner);
+        return(order.id, order.details, order.moneyHolderAccount, order.isFinalized, order.owner);
 
     }
 
