@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node app.js",
     "testrpc": "testrpc -a 4 -l 24000000 -m 'lion salon open vague century present frown hungry siren return early custom'",
-    "truffle-test": "truffle test test/*.js"
+    "truffle-test": "truffle test test/*.js",
+    "nodemon":"nodemon app.js"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
