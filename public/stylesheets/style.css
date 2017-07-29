@@ -6,3 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
+
+.base-container{
+  padding: 3rem 1.5rem;
+}
