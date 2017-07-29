@@ -10,7 +10,7 @@ contract DebtManager {
         uint id;
         string details;
         address moneyHolderAccount; // TODO:Name ??
-        bool finalize;
+        bool isFinilized;
         address owner;
 
     }
@@ -22,7 +22,7 @@ contract DebtManager {
 
         address companyAccount;
         uint amount;
-        bool isAgree;
+        bool isAgreed;
     }
 
     uint debtId; // auto increment unique id
@@ -67,12 +67,12 @@ contract DebtManager {
 
     //Update
 
-    function isAgreeDebt(uint debtId){
+    function confirmDebt(uint debtId){
 
         var debt = debtArr[debtId];
 
         if(debt.companyAccount == msg.sender){
-            debt.isAgree = true;
+            debt.isAgreed = true;
         }
     }
 
@@ -89,12 +89,12 @@ contract DebtManager {
     function getOrderById(uint orderId) constant returns( uint id,
                                                           string details,
                                                           address moneyHolderAccount,
-                                                          bool finalize,
+                                                          bool isFinilized,
                                                           address owner){
 
         Order order = orderArr[orderId];
 
-        return(order.id, order.details, order.moneyHolderAccount, order.finalize, order.owner);
+        return(order.id, order.details, order.moneyHolderAccount, order.isFinilized, order.owner);
 
     }
 
@@ -103,11 +103,11 @@ contract DebtManager {
                                                         uint orderId,
                                                         address companyAccount,
                                                         uint amount,
-                                                        bool isAgree){
+                                                        bool isAgreed){
 
         Debt debt = debtArr[debtId];
 
-        return (debt.id, debt.orderId, debt.companyAccount, debt.amount, debt.isAgree);
+        return (debt.id, debt.orderId, debt.companyAccount, debt.amount, debt.isAgreed);
     }
 
 }
