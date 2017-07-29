@@ -53,7 +53,7 @@ contract DebtManager {
         return --orderId;
     }
 
-    function createDebt(uint oderId, address companyAccountress, uint amount) returns(uint){
+    function createDebt(uint orderId, address companyAccountress, uint amount) returns(uint){
         //TODO: check if company in a company list
 
         //TODO: check if order id in the order list, probably with order index or just with index if we do not delete orders
