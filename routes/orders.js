@@ -75,7 +75,7 @@ router.get('/:id', function (req, res) {
 
     console.log('# Get order');
 
-    var id = req.params.id;
+    var id = helper.parsePositiveInt(req.params.id);
     if (!id) {
         res.json(helper.getErrorMessage('id'));
         return;
@@ -100,7 +100,7 @@ router.post('/:id/finalize', function (req, res) {
 
     console.log('# Finalize order');
 
-    var id = req.params.id;
+    var id = helper.parsePositiveInt(req.params.id);
     if (!id) {
         res.json(helper.getErrorMessage('id'));
         return;

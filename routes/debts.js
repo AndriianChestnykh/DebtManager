@@ -37,7 +37,7 @@ router.put('/', function (req, res) {
 
     console.log('# Create debt');
 
-    var orderId = req.body.orderId;
+    var orderId = helper.parsePositiveInt(req.body.orderId);
     if (!orderId) {
         res.json(helper.getErrorMessage('orderId'));
         return;
@@ -47,7 +47,7 @@ router.put('/', function (req, res) {
         res.json(helper.getErrorMessage('companyAccount'));
         return;
     }
-    var amount = req.body.amount;
+    var amount = helper.parsePositiveInt(req.body.amount);
     if (!amount) {
         res.json(helper.getErrorMessage('amount'));
         return;
@@ -75,7 +75,7 @@ router.get('/:id', function (req, res) {
 
     console.log('# Get debt');
 
-    var id = req.params.id;
+    var id = helper.parsePositiveInt(req.params.id);
     if (!id) {
         res.json(helper.getErrorMessage('id'));
         return;
@@ -100,7 +100,7 @@ router.post('/:id/agree', function (req, res) {
 
     console.log('# Agree on debt');
 
-    var id = req.params.id;
+    var id = helper.parsePositiveInt(req.params.id);
     if (!id) {
         res.json(helper.getErrorMessage('id'));
         return;
@@ -125,7 +125,7 @@ router.get('/filter/byOrderId/:orderId', function (req, res) {
 
     console.log('# Get debts by orderId');
 
-    var orderId = req.params.orderId;
+    var orderId = helper.parsePositiveInt(req.params.orderId);
     if (!orderId) {
         res.json(helper.getErrorMessage('orderId'));
         return;
