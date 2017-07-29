@@ -10,10 +10,15 @@ var web3 = new Web3();
 
 var account = '0x8a0643dfe5a35c75e75bfe241ec6e63f2170e201';
 
+var contract = require("truffle-contract");
+var DebtManager = contract(contractArtifact);
+
 /**
  * Get debts
  */
 router.get('/', function (req, res) {
+
+    console.log(DebtManager);
 
     web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
