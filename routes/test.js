@@ -18,31 +18,34 @@ var provider = new Web3.providers.HttpProvider("http://13.93.217.3:22000");
 /**
  * Get debts
  */
-router.get('/', function (req, res) {
 
-    //console.log(DebtManager);
-    web3 = new Web3(provider);
-    DebtManager.setProvider(provider);
-    var deployed;
-    DebtManager.deployed().then(function(instance) {
-        deployed = instance;
-        //console.log(instance);
-//        return instance.getOrderLength();
-        return deployed.createOrder('test', account, {from: account, gas: 1000000});
-        // Do something with the result or continue with more transactions.
-    }).then(function(response) {
-        console.log(response);
-        return deployed.getOrderLength.call();
-    }).then(function(response) {
-        console.log(response.toNumber());
-        //return instance.getOrderLength.call();
-    });
+// function getTestData (req, res) {
+//     //console.log(DebtManager);
+//     web3 = new Web3(provider);
+//     DebtManager.setProvider(provider);
+//     var deployed;
+//     DebtManager.deployed()
+//         .then(function (instance) {
+//             deployed = instance;
+//             //console.log(instance);
+// //        return instance.getOrderLength();
+//             return deployed.createOrder('test', account, {from: account, gas: 1000000});
+//             // Do something with the result or continue with more transactions.
+//         })
+//         .then(function (response) {
+//             console.log(response);
+//             return deployed.getOrderLength.call();
+//         })
+//         .then(function (response) {
+//             console.log(response.toNumber());
+//             //return instance.getOrderLength.call();
+//         });
+//
+//     res.json({balance: 0, coinbase: 1});
+// }
 
-    res.json({balance: 0, coinbase: 1});
-});
+router.get('/', funcs.getTestData);
 
-router.get('/:id', function (req, res) {
-    res.send('dummy');
-});
+router.get('/:id', funcs.getTestData);
 
 module.exports = router;
