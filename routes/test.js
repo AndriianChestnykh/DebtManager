@@ -26,16 +26,27 @@ router.get('/', function (req, res) {
 
     DebtManager.setProvider(provider);
 
+    var deployed;
+
     DebtManager.deployed().then(function(instance) {
 
+        deployed = instance;
         //console.log(instance);
 
 //        return instance.getOrderLength();
-        return instance.createOrder('test', account, {from: account, gas: 1000000});
+        return deployed.createOrder('test', account, {from: account, gas: 1000000});
 
         // Do something with the result or continue with more transactions.
     }).then(function(response) {
-        console.log(response.toString());
+        console.log(response);
+
+        return deployed.getOrderLength.call();
+
+    }).then(function(response) {
+        console.log(response.toNumber());
+
+        //return instance.getOrderLength.call();
+
     });
 
 
