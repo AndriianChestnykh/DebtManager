@@ -49,8 +49,7 @@ contract DebtManager {
     function createOrder(string details, address moneyHolderAccount) returns(uint) {
         orderArr.push(Order(orderId, details, moneyHolderAccount, false,msg.sender));
 
-        orderId++;
-        return --orderId;
+        return orderId++;
     }
 
     function createDebt(uint orderId, address companyAccountress, uint amount) returns(uint){
@@ -60,8 +59,7 @@ contract DebtManager {
 
         debtArr.push(Debt(debtId, orderId, companyAccountress, amount, false));
 
-        debtId++;
-        return --debtId;
+        return debtId++;
     }
 
 
