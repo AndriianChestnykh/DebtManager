@@ -64,10 +64,16 @@
     "1501324665836": {
       "events": {},
       "links": {},
-      "address": "0xcf24c68be6b30f57e1d32a95667fa94ea5bb4d3e",
-      "updated_at": 1501348158471
+      "address": "0xda3d79436d8b06278ec35fad5e7ac2888bba04f7",
+      "updated_at": 1501349524816
+    },
+    "1501350293638": {
+      "events": {},
+      "links": {},
+      "address": "0x56722169ba573e6208d157e917740394929e9cc3",
+      "updated_at": 1501350328072
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1501348158471
+  "updated_at": 1501350328072
 }

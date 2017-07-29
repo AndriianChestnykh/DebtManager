@@ -8,7 +8,7 @@ var contractArtifact = require('../build/contracts/DebtManager.json');
 var Web3 = require('web3');
 var web3 = new Web3();
 
-var account = '0x8a0643dfe5a35c75e75bfe241ec6e63f2170e201';
+var account = '0x7f786d3f183ff6f9c6a97f69921414a14b2f7dbb';
 
 var contract = require("truffle-contract");
 var DebtManager = contract(contractArtifact);
@@ -18,7 +18,7 @@ var DebtManager = contract(contractArtifact);
  */
 router.get('/', function (req, res) {
 
-    console.log(DebtManager);
+    //console.log(DebtManager);
 
    var provider = new Web3.providers.HttpProvider("http://localhost:8545");
 
@@ -28,9 +28,10 @@ router.get('/', function (req, res) {
 
     DebtManager.deployed().then(function(instance) {
 
-        console.log(instance);
+        //console.log(instance);
 
-        return instance.createOrder.call('test', "0xa42756f9e7f5baa74edfd2cd1c46c60414be8ecc");
+//        return instance.getOrderLength();
+        return instance.createOrder('test', account, {from: account, gas: 1000000});
 
         // Do something with the result or continue with more transactions.
     }).then(function(response) {
