@@ -8,7 +8,7 @@ var contractArtifact = require('../build/contracts/DebtManager.json');
 var Web3 = require('web3');
 var web3 = new Web3();
 
-var account = '0x7f786d3f183ff6f9c6a97f69921414a14b2f7dbb';
+var account = '0x8a0643dfe5a35c75e75bfe241ec6e63f2170e201';
 
 var contract = require("truffle-contract");
 var DebtManager = contract(contractArtifact);
