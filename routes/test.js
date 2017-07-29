@@ -20,19 +20,37 @@ router.get('/', function (req, res) {
 
     console.log(DebtManager);
 
-    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+   var provider = new Web3.providers.HttpProvider("http://localhost:8545");
 
-    var coinbase = web3.eth.coinbase;
-    var balance = web3.eth.getBalance(account);
+    web3 = new Web3(provider);
 
-    var abi = web3.eth.contract(contractArtifact.abi);
+    DebtManager.setProvider(provider);
 
-    web3.eth.sendTransaction({data: code}, function(err, transactionHash) {
-    if (!err)
-        console.log(transactionHash); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+    DebtManager.deployed().then(function(instance) {
+
+        console.log(instance);
+
+        return instance.createOrder.call('test', "0xa42756f9e7f5baa74edfd2cd1c46c60414be8ecc");
+
+        // Do something with the result or continue with more transactions.
+    }).then(function(response) {
+        console.log(response.toString());
     });
 
-    res.json({balance: balance, coinbase: coinbase});
+
+
+
+    // var coinbase = web3.eth.coinbase;
+    // var balance = web3.eth.getBalance(account);
+    //
+    // var abi = web3.eth.contract(contractArtifact.abi);
+    //
+    // web3.eth.sendTransaction({data: code}, function(err, transactionHash) {
+    // if (!err)
+    //     console.log(transactionHash); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
+    // });
+    //
+    res.json({balance: 0, coinbase: 1});
 });
 
 
