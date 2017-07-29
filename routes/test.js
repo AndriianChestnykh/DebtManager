@@ -6,33 +6,36 @@ var router = express.Router();
 
 var contractArtifact = require('../build/contracts/DebtManager.json');
 var Web3 = require('web3');
-var web3 = new Web3();
+var provider = new Web3.providers.HttpProvider("http://localhost:8545");
+var web3 = new Web3(provider);
 
 var account = '0x8a0643dfe5a35c75e75bfe241ec6e63f2170e201';
 
 var contract = require("truffle-contract");
 var DebtManager = contract(contractArtifact);
+DebtManager.providers
 
 /**
  * Get debts
  */
 router.get('/', function (req, res) {
 
-    console.log(DebtManager);
+    //console.log(DebtManager);
 
-    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    DebtManager.setProvider(provider);
 
-    var coinbase = web3.eth.coinbase;
-    var balance = web3.eth.getBalance(account);
+    var meta;
+    DebtManager.deployed().then(function(instance) {
+    meta = instance;
+    return meta.createOrder('test', account, {from: account});
+    }).then(function(result) {
+    // If this callback is called, the transaction was successfully processed.
+    alert("Transaction successful!")
+    }).catch(function(e) {
+    // There was an error! Handle it.
+    })
 
-    var abi = web3.eth.contract(contractArtifact.abi);
-
-    web3.eth.sendTransaction({data: code}, function(err, transactionHash) {
-    if (!err)
-        console.log(transactionHash); // "0x7f9fade1c0d57a7af66ab4ead7c2eb7b11a91385"
-    });
-
-    res.json({balance: balance, coinbase: coinbase});
+    res.json([]);
 });
 
 
