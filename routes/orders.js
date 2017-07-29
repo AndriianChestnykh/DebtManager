@@ -3,32 +3,12 @@
 var helper = require('../helpers/helper');
 var express = require('express');
 var router = express.Router();
+var funcs = require('./funcs');
 
 /**
  * Get orders
  */
-router.get('/', function (req, res) {
-
-    // TODO: replace this. get orders from contract
-    var orders = [
-        {
-            id: 1,
-            details: "Radeon RX470 - 100 pcs",
-            moneyHolderAccount: "0x1234567890",
-            isFinalized: false,
-            owner: "0x2345678901"
-        },
-        {
-            id: 2,
-            details: "Bitfury BlockBox - 1 pcs",
-            moneyHolderAccount: "0x2345678901",
-            isFinalized: false,
-            owner: "0x2345678901"
-        }
-    ];
-
-    res.json({success: true, orders: orders});
-});
+router.get('/:id', funcs.getOrderById);
 
 /**
  * Create order
@@ -47,24 +27,9 @@ router.put('/', function (req, res) {
         res.json(helper.getErrorMessage('moneyHolderAccount'));
         return;
     }
-    var owner = req.body.owner;
-    if (!owner) {
-        res.json(helper.getErrorMessage('owner'));
-        return;
-    }
 
-    var order = {
-        id: null,
-        details: details,
-        moneyHolderAccount: moneyHolderAccount,
-        isFinalized: false,
-        owner: owner
-    };
+    funcs.createOrder(req,res);
 
-    // TODO: replace this. save order and add id
-    order.id = Math.floor(Math.random() * 1000);
-
-    res.json({success: true, order: order});
 });
 
 
@@ -74,23 +39,8 @@ router.put('/', function (req, res) {
 router.get('/:id', function (req, res) {
 
     console.log('# Get order');
-
-    var id = helper.parsePositiveInt(req.params.id);
-    if (!id) {
-        res.json(helper.getErrorMessage('id'));
-        return;
-    }
-
-    // TODO: replace this. fetch order
-    var order = {
-        id: id,
-        details: "Radeon RX470 - 100 pcs",
-        moneyHolderAccount: "0x1234567890",
-        isFinalized: false,
-        owner: "0x2345678901"
-    };
-
-    res.json({success: true, order: order});
+    funcs.getOrderById(req.params.id);
+    
 });
 
 /**
@@ -106,16 +56,7 @@ router.post('/:id/finalize', function (req, res) {
         return;
     }
 
-    // TODO: replace this. fetch order and set isFinalized to true
-    var order = {
-        id: id,
-        details: "Radeon RX470 - 100 pcs",
-        moneyHolderAccount: "0x1234567890",
-        isFinalized: true,
-        owner: "0x2345678901"
-    };
-
-    res.json({success: true, order: order});
+    funcs.finalizeOrderById(req,res);
 });
 
 

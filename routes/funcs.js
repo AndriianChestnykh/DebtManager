@@ -19,36 +19,60 @@ var deployed;
  *
  * **/
 
-function getTestData (req, res) {
-    //console.log(DebtManager);
-    web3 = new Web3(provider);
-    DebtManager.setProvider(provider);
+function createOrder (req, res) {
     var deployed;
     DebtManager.deployed()
         .then(function (instance) {
             deployed = instance;
-            //console.log(instance);
-//        return instance.getOrderLength();
-            return deployed.createOrder('test', account, {from: account, gas: 1000000});
+            return deployed.createOrder(req.body.details, req.body.moneyHolderAccount, {from: account, gas: 1000000});
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {
-            console.log(response);
             return deployed.getOrderLength.call();
         })
         .then(function (response) {
-            console.log(response.toNumber());
-            //return instance.getOrderLength.call();
+            res.send({orderid: response.toNumber()});
         });
-    //WARNING! this code may run before promise chain ends
-    res.json({balance: 0, coinbase: 1});
-
-    if (req.params.id) {
-        console.log('Call getTestData from another route, id=%s', req.params.id);
-    }
 }
 
+function getOrderById (req, res) {
+    var deployed;
+    DebtManager.deployed()
+        .then(function (instance) {
+            deployed = instance;
+            return deployed.getOrderById.call(req.params.id);
+            // Do something with the result or continue with more transactions.
+        })
+        .then(function (response) {
+            res.send(response);
+        });
+}
+
+function finalizeOrderById (req, res) {
+    var deployed;
+    DebtManager.deployed()
+        .then(function (instance) {
+            deployed = instance;
+
+            // TODO: replace this. fetch order and set isFinalized to true
+            var order = {
+                id: id,
+                details: "Radeon RX470 - 100 pcs",
+                moneyHolderAccount: "0x1234567890",
+                isFinalized: true,
+                owner: "0x2345678901"
+            };
+
+            return order;
+            // Do something with the result or continue with more transactions.
+        })
+        .then(function (response) {
+            res.send(response);
+        });
+}
 
 module.exports = {
-    getTestData: getTestData
+    createOrder: createOrder,
+    getOrderById: getOrderById,
+    finalizeOrderById: finalizeOrderById
 };
