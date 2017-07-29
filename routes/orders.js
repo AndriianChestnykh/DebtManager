@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 
 /**
- * Get orders listing
+ * Get orders
  */
 router.get('/', function (req, res) {
 
@@ -116,6 +116,34 @@ router.post('/:id/finalize', function (req, res) {
     };
 
     res.json({success: true, order: order});
+});
+
+
+/**
+ * Get orders by companyId
+ */
+router.get('/filter/byCompanyId/:companyId', function (req, res) {
+
+    console.log('# Get orders by companyId');
+
+    var companyId = req.params.companyId;
+    if (!companyId) {
+        res.json(helper.getErrorMessage('companyId'));
+        return;
+    }
+
+    // TODO: replace this. fetch orders by companyId
+    var orders = [
+        {
+            id: 1,
+            details: "Radeon RX470 - 100 pcs",
+            moneyHolderAccount: "0x1234567890",
+            isFinalized: false,
+            owner: "0x2345678901"
+        }
+    ];
+
+    res.json({success: true, orders: orders});
 });
 
 module.exports = router;

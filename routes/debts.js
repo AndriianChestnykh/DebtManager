@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 
 /**
- * Get debts listing
+ * Get debts
  */
 router.get('/', function (req, res) {
 
@@ -116,6 +116,33 @@ router.post('/:id/agree', function (req, res) {
     };
 
     res.json({success: true, debt: debt});
+});
+
+/**
+ * Get debts by orderId
+ */
+router.get('/filter/byOrderId/:orderId', function (req, res) {
+
+    console.log('# Get debts by orderId');
+
+    var orderId = req.params.orderId;
+    if (!orderId) {
+        res.json(helper.getErrorMessage('orderId'));
+        return;
+    }
+
+    // TODO: replace this. fetch debts by orderId
+    var debts = [
+        {
+            id: 1,
+            orderId: 1,
+            companyAccount: "0x1234567890",
+            amount: 1200,
+            isAgreed: false
+        }
+    ];
+
+    res.json({success: true, debts: debts});
 });
 
 module.exports = router;
