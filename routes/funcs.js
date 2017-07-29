@@ -35,16 +35,16 @@ function createOrder (req, res) {
         });
 }
 
-function getOrderById (req, res) {
+function getOrderById (id) {
     var deployed;
     DebtManager.deployed()
         .then(function (instance) {
             deployed = instance;
-            return deployed.getOrderById.call(req.params.id);
+            return deployed.getOrderById.call(id);
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {
-            res.send(response);
+            return response;
         });
 }
 
