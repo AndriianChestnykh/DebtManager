@@ -33,9 +33,9 @@ function createOrder (req, res) {
         .then(function (response) {
             res.send({orderid: response.toNumber()});
         });
-}
+};
 
-function getOrderById (id) {
+function getOrderById(id, callback) {
     var deployed;
     DebtManager.deployed()
         .then(function (instance) {
@@ -44,9 +44,9 @@ function getOrderById (id) {
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {
-            return response;
+            callback(response);
         });
-}
+};
 
 function finalizeOrderById (req, res) {
     var deployed;
@@ -54,16 +54,7 @@ function finalizeOrderById (req, res) {
         .then(function (instance) {
             deployed = instance;
 
-            // TODO: replace this. fetch order and set isFinalized to true
-            var order = {
-                id: id,
-                details: "Radeon RX470 - 100 pcs",
-                moneyHolderAccount: "0x1234567890",
-                isFinalized: true,
-                owner: "0x2345678901"
-            };
-
-            return order;
+            return deployed.finalizeOrderById(req.params.id, {from: account, gas: 1000000});;
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {

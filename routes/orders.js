@@ -9,8 +9,11 @@ var funcs = require('./funcs');
  * Get orders
  */
 router.get('/:id', function (req,res){
-    res.send(funcs.getOrderById(req.params.id));
+    funcs.getOrderById(req.params.id, function(id){
+        res.send(id);
+    });
 });
+
 
 /**
  * Create order

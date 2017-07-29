@@ -74,6 +74,16 @@ contract DebtManager {
         }
     }
 
+    function finalizeOrderById(uint orderId) returns(bool){
+        var order = orderArr[orderId];
+
+        if(order.moneyHolderAccount == msg.sender){
+            order.isFinalized = true;
+            return true;
+        }
+        return false;
+    }
+
     //Get constant
 
     function getOrderLength() constant returns(uint){
