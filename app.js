@@ -14,6 +14,12 @@ var companies = require('./routes/companies');
 
 var app = express();
 
+
+
+var companyAccount = "0xed9d02e382b34818e88b88a309c7fe71e65f419d"
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

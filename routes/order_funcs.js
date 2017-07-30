@@ -83,7 +83,12 @@ function getAllOrders(callback) {
         });
         p.push(a);
     }
-    Promise.all(p).then(values => { 
+    Promise.all(p).then(values => {
+
+        values.forEach(function(item){
+            item.id = helper.parsePositiveInt(item.id);
+        });
+
         callback(values); 
     });
     }
@@ -105,7 +110,9 @@ function getAllOrdersByCompanyId(callback) {
         p.push(a);
     }
     Promise.all(p).then(values => { 
-        callback(values); 
+        callback(values);
+
+
     });
     }
 );
