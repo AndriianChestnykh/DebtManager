@@ -1,5 +1,6 @@
 'use strict';
 
+var helper = require('../helpers/helper');
 var contractArtifact = require('../build/contracts/DebtManager.json');
 var Web3 = require('web3');
 var web3 = new Web3();
@@ -35,6 +36,19 @@ function createOrder (req, res) {
         });
 };
 
+function getOrderLength(callback){
+    var deployed;
+    DebtManager.deployed()
+        .then(function (instance) {
+            deployed = instance;
+            return deployed.getOrderLength.call();
+            // Do something with the result or continue with more transactions.
+        })
+        .then(function (response) {
+            callback(response);
+        });
+};
+
 function getOrderById(id, callback) {
     var deployed;
     DebtManager.deployed()
@@ -50,16 +64,30 @@ function getOrderById(id, callback) {
 
 function getAllOrders(callback) {
 
-    var p1 = new Promise((resolve, reject) => {
-        getOrderById(id, function(){
-            resolve();
-        });
-    });
+    getOrderLength(function(orderLength){
+        var p1 = new Promise((resolve, reject) => {
+            getOrderById(1, function(response){
+                resolve(response);
+            });
+        }); 
+        var p2 = new Promise((resolve, reject) => {
+            getOrderById(2, function(response){
+                resolve(response);
+            });
+        }); 
+        var p3 = new Promise((resolve, reject) => {
+            getOrderById(3, function(response){
+                resolve(response);
+            });
+        }); 
 
-    Promise.all([p1]).then(values => { 
-        console.log(values); 
-        callback();
-    });
+        Promise.all([p1, p2, p3]).then(values => { 
+            callback(values); 
+        });
+    }
+);
+    //Выведет: 
+    // [3, 1337, "foo"] 
 
 };
 
@@ -81,5 +109,6 @@ module.exports = {
     createOrder: createOrder,
     getOrderById: getOrderById,
     finalizeOrderById: finalizeOrderById,
-    getAllOrders: getAllOrders
+    getAllOrders: getAllOrders,
+    getOrderLength: getOrderLength
 };

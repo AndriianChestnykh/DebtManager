@@ -10,8 +10,18 @@ var funcs = require('./funcs');
  */
 router.get('/all', function (req,res){
     console.log('# Get order');
-    funcs.getAllOrders(function(){
-        res.send('test');
+    funcs.getAllOrders(function(response){
+        res.send(response);
+    });
+});
+
+/**
+ * Get all orders
+ */
+router.get('/getorderlength', function (req,res){
+    console.log('# Get order');
+    funcs.getOrderLength(function(response){
+        res.send(response);
     });
 });
 
