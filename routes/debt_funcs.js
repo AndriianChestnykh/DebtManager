@@ -66,13 +66,16 @@ function getDebtById(id) {
             if (response[2] === '0x') {
                 throw new Error('Not found');
             }
+
             return {
+
                 id: response[0].toNumber(),
                 orderid: response[1].toNumber(),
                 companyaccount: response[2],
                 amount: response[3].toNumber(),
                 isagreed: response[4],
-                isFinalized: response[5],
+                moneyHolderAccount: response[5],
+                isFinalized: response[6],
                 companyName: config.companyName[response[2]]
             };
         });
