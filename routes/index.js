@@ -59,14 +59,14 @@ router.get('/', function (req, res, next) {
                 for (var allDebtItem of allDebts) {
 
                     if (allDebtItem.orderid === order.id) {
-                        if (typeof debtsByCompany[allDebtItem.companyaccount] === "undefined") {
-                            debtsByCompany[allDebtItem.companyaccount] = 0;
+                        if (typeof debtsByCompany[allDebtItem.companyName] === "undefined") {
+                            debtsByCompany[allDebtItem.companyName] = 0;
                         }
                         if (order.moneyHolderAccount === companyAccount && allDebtItem.companyaccount !== companyAccount) {
-                            debtsByCompany[allDebtItem.companyaccount] += allDebtItem.amount;
+                            debtsByCompany[allDebtItem.companyName] += allDebtItem.amount;
                         }
                         if (order.moneyHolderAccount !== companyAccount && allDebtItem.companyaccount === companyAccount) {
-                            debtsByCompany[allDebtItem.companyaccount] -= allDebtItem.amount;
+                            debtsByCompany[allDebtItem.companyName] -= allDebtItem.amount;
                         }
                     }
                 }
