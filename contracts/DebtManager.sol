@@ -65,8 +65,8 @@ contract DebtManager {
         //new debts
 
         debtArr.push(Debt(0, 0, address1, 100, false, address1));
-        debtArr.push(Debt(1, 0, address2, 20, false, address1));
-        debtArr.push(Debt(2, 0, address3, 10, false, address1));
+        debtArr.push(Debt(1, 0, address2, 20,  false, address1));
+        debtArr.push(Debt(2, 0, address3, 10,  false, address1));
 
 
         debtArr.push(Debt(3, 1, address1, 100, false, address2));
