@@ -9,34 +9,21 @@ var funcs = require('./debt_funcs');
 /**
  * Get all orders
  */
-router.get('/all', function (req,res){
+router.get('/all', function (req, res) {
     console.log('# Get all debts');
-    funcs.getAllDebts(function(response){
+    funcs.getAllDebts(function (response) {
         res.send(response);
     });
 });
 
 
-
 /**
  * Get debts by order id
  */
-router.get('/filter/byOrderId/:id', function (req,res){
+router.get('/filter/byOrderId/:id', function (req, res) {
     console.log('# Get order');
-    funcs.getDebtByOrderId(req.params.id, function(response){
-
-        var resultList = []
-        response.forEach(function(item, index, object) {
-
-
-            if (item != null) {
-                resultList.push(item);
-            }
-        });
-
-        console.log(resultList);
-
-        res.send(resultList);
+    funcs.getDebtByOrderId(req.params.id, function (response) {
+        res.send(response);
     });
 });
 
@@ -44,9 +31,9 @@ router.get('/filter/byOrderId/:id', function (req,res){
 /**
  * Get debt length
  */
-router.get('/getdebtlength', function (req,res){
+router.get('/getdebtlength', function (req, res) {
     console.log('# Debt length');
-    funcs.getDebtLength(function(response){
+    funcs.getDebtLength().then(response => {
         res.send(response);
     });
 });
@@ -74,7 +61,7 @@ router.put('/', function (req, res) {
         return;
     }
     console.log(req);
-    funcs.createDebt(req,res);
+    funcs.createDebt(req, res);
 });
 
 /**
@@ -83,11 +70,12 @@ router.put('/', function (req, res) {
 router.get('/:id', function (req, res) {
 
     console.log('# Get debt');
-    funcs.getDebtById(req.params.id, function(response){
+    funcs.getDebtById(req.params.id).then(response => {
         res.send(response);
+    }, error => {
+        res.status(404).json({success: false});
     });
 });
-
 
 
 /**

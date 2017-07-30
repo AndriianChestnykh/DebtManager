@@ -8,9 +8,9 @@ var funcs = require('./order_funcs');
 /**
  * Get all orders
  */
-router.get('/all', function (req,res){
+router.get('/all', function (req, res) {
     console.log('# Get order');
-    funcs.getAllOrders(function(response){
+    funcs.getAllOrders(function (response) {
         res.send(response);
     });
 });
@@ -18,9 +18,9 @@ router.get('/all', function (req,res){
 /**
  * Get all orders
  */
-router.get('/getorderlength', function (req,res){
+router.get('/getorderlength', function (req, res) {
     console.log('# Get order');
-    funcs.getOrderLength(function(response){
+    funcs.getOrderLength().then(response => {
         res.send(response);
     });
 });
@@ -28,10 +28,12 @@ router.get('/getorderlength', function (req,res){
 /**
  * Get orders
  */
-router.get('/:id', function (req,res){
+router.get('/:id', function (req, res) {
     console.log('# Get order');
-    funcs.getOrderById(req.params.id, function(response){
+    funcs.getOrderById(req.params.id).then(response => {
         res.send(response);
+    }, error => {
+        res.status(404).json({success: false});
     });
 });
 
@@ -54,7 +56,7 @@ router.put('/', function (req, res) {
         return;
     }
 
-    funcs.createOrder(req,res);
+    funcs.createOrder(req, res);
 
 });
 
@@ -72,7 +74,7 @@ router.post('/:id/finalize', function (req, res) {
         return;
     }
 
-    funcs.finalizeOrderById(req,res);
+    funcs.finalizeOrderById(req, res);
 });
 
 
@@ -89,7 +91,7 @@ router.get('/filter/byCompanyId/:companyId', function (req, res) {
         return;
     }
 
-    funcs.getAllOrdersByCompanyId(function(response){
+    funcs.getAllOrdersByCompanyId(function (response) {
         res.send(response);
     })
 });

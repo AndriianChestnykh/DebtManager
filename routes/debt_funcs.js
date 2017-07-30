@@ -40,22 +40,22 @@ function createDebt(req, res) {
         });
 }
 
-function getDebtLength(callback) {
+function getDebtLength() {
     var deployed;
-    DebtManager.deployed()
+    return DebtManager.deployed()
         .then(function (instance) {
             deployed = instance;
             return deployed.getDebtLength.call();
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {
-            callback(response);
+            return response;
         });
 }
 
-function getDebtById(id, callback) {
+function getDebtById(id) {
     var deployed;
-    DebtManager.deployed()
+    return DebtManager.deployed()
         .then(function (instance) {
             deployed = instance;
             return deployed.getDebtById.call(id);
@@ -63,69 +63,56 @@ function getDebtById(id, callback) {
         })
         .then(function (response) {
             //var parsedData = JSON.parse(response);
-            var a = {
+            if (response[2] === '0x') {
+                throw new Error('Not found');
+            }
+            return {
                 id: response[0].toNumber(),
                 orderid: response[1].toNumber(),
                 companyaccount: response[2],
                 amount: response[3].toNumber(),
                 isagreed: response[4],
                 isFinalized: response[5],
-                companyName:config.companyName[response[2]]
+                companyName: config.companyName[response[2]]
             };
-            callback(a);
         });
 }
 
 function getDebtByOrderId(id, callback) {
-
-    console.log("getDebtByOrderId");
-    console.log(id);
-
     var p = [];
-    getDebtLength(function (length) {
+    getDebtLength().then((length) => {
         for (var i = 0; i < length; i++) {
-            var a = new Promise((resolve, reject) => {
-                getDebtById(i, function (response) {
-
-                    console.log(id);
-                    console.log(response.orderid);
-                    console.log(response.orderid == id);
-
-                    if (response.orderid == id) {
-                        resolve(response);
-                    } else {
-                        resolve(null);
-                    }
-                });
-            });
+            var a = getDebtById(i);
             p.push(a);
         }
 
         Promise.all(p).then(values => {
+            var filtered = [];
+            values.forEach(function (item, index, object) {
+                if (item && item.orderid == id) {
+                    filtered.push(item);
+                }
+            });
 
-            callback(values);
+            console.log(filtered);
+            callback(filtered);
         });
     });
 
 }
 
 function getAllDebts(callback) {
-
     var p = [];
-    getDebtLength(function (length) {
-            for (var i = 0; i < length; i++) {
-                var a = new Promise((resolve, reject) => {
-                    getDebtById(i, function (response) {
-                        resolve(response);
-                    });
-                });
-                p.push(a);
-            }
-            Promise.all(p).then(values => {
-                callback(values);
-            });
+    return getDebtLength().then((length) => {
+        for (var i = 0; i < length; i++) {
+            var a = getDebtById(i);
+            p.push(a);
         }
-    );
+
+        Promise.all(p).then(values => {
+            callback(values);
+        });
+    });
 }
 
 function confirmDebt(req, res) {

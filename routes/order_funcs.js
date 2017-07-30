@@ -46,7 +46,7 @@ function getOrderLength() {
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {
-            return response.toNumber();
+            return response;
         });
 }
 
