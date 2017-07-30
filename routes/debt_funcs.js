@@ -88,7 +88,15 @@ function getDebtByOrderId(id, callback) {
         p.push(a);
     }
 
-    Promise.all(p).then(values => { 
+    Promise.all(p).then(values => {
+
+        values.forEach(function(item, index, object){
+            if (item === null) {
+                object.splice(index, 1);
+            }
+        });
+
+        console.log(values);
         callback(values); 
     });
     });
