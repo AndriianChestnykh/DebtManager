@@ -53,12 +53,17 @@ contract DebtManager {
         return orderId++;
     }
 
-    function createDebt(uint orderId, address companyAccountress, uint amount,address moneyHolderAccount) returns(uint){
+    function createDebt(uint orderId, address companyAccountress, uint amount) returns(uint){
         //TODO: check if company in a company list
 
         //TODO: check if order id in the order list, probably with order index or just with index if we do not delete orders
+        address holder = orderArr[orderId].moneyHolderAccount;
 
-        debtArr.push(Debt(debtId, orderId, companyAccountress, amount, false, moneyHolderAccount));
+        if(holder == 0){
+            throw;
+        }
+
+        debtArr.push(Debt(debtId, orderId, companyAccountress, amount, false, holder));
 
         return debtId++;
     }
