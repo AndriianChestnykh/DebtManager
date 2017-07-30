@@ -67,7 +67,7 @@ router.get('/', function(req, res, next) {
 
           var debtList = [[ 2, 3, "0xbbb", 10, true],[4, 5, "0xbbb1111", 20, true]];
 
-          res.render('index', { currentDebt: 1000, orderList: orderList, debtList: debtList});
+          res.render('index', {companyId:companyAccount ,currentDebt: 1000, orderList: orderList, debtList: debtList});
 
 
       });

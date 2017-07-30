@@ -15,13 +15,30 @@ function getDebtsByOrderId(orderId) {
                 if(item.isagreed){
                     var checked= "<i class=\"fa fa-check\"></i>"
                 }else{
-                    var checked= "<i class=\"fa fa-times text-danger\"></i>"
+
+                    if(companyId === item.companyaccount){
+                        var checked = "<button class=\"btn btn-link\" onclick=\"check("+item.id+")\" type=\"button\" data-toggle=\"modal\"><i class=\"fa fa-check\"></i>Check</button>";
+                    }else {
+                        var checked = "<i class=\"fa fa-times text-danger\"></i>";
+                    }
                 }
 
                 var newtr = "<tr><td>"+item.id+"</td><td>"+item.orderid+"</td><td>"+item.companyName+"</td><td>"+item.amount+"</td><td>"+checked+"</td></tr>";
 
                 $("#popup").find('tbody').append(newtr);
             })
+        }
+    });
+}
+
+function check(id){
+
+    $.ajax({
+        type: "POST",
+        url: "debts/"+id+"/agree",
+        success: function (result) {
+            console.log(result);
+            $("#details").hide();
         }
     });
 }
