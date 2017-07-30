@@ -69,7 +69,8 @@ function getDebtById(id, callback) {
                 companyaccount: response[2],
                 amount: response[3].toNumber(),
                 isagreed: response[4],
-                isFinalized: response[5]
+                isFinalized: response[5],
+                companyName:config.companyName[response[2]]
             };
             callback(a);
         });

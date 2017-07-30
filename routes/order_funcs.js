@@ -65,7 +65,8 @@ function getOrderById(id) {
                 details: response[1],
                 moneyHolderAccount: response[2],
                 isFinalized: response[3],
-                owner: response[4]
+                owner: response[4],
+                moneyHolderName:config.companyName[response[2]]
             };
         });
 }
