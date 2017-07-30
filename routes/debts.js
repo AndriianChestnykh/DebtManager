@@ -24,7 +24,19 @@ router.get('/all', function (req,res){
 router.get('/filter/byOrderId/:id', function (req,res){
     console.log('# Get order');
     funcs.getDebtByOrderId(req.params.id, function(response){
-        res.send(response);
+
+        var resultList = []
+        response.forEach(function(item, index, object) {
+
+
+            if (item != null) {
+                resultList.push(item);
+            }
+        });
+
+        console.log(resultList);
+
+        res.send(resultList);
     });
 });
 

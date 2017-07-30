@@ -78,11 +78,19 @@ function getDebtById(id, callback) {
 
 function getDebtByOrderId(id, callback) {
 
+    console.log("getDebtByOrderId");
+    console.log(id);
+
     var p = [];
     getDebtLength(function (length) {
         for (var i = 0; i < length; i++) {
             var a = new Promise((resolve, reject) => {
                 getDebtById(i, function (response) {
+
+                    console.log(id);
+                    console.log(response.orderid);
+                    console.log(response.orderid == id);
+
                     if (response.orderid == id) {
                         resolve(response);
                     } else {
@@ -95,13 +103,6 @@ function getDebtByOrderId(id, callback) {
 
         Promise.all(p).then(values => {
 
-            values.forEach(function (item, index, object) {
-                if (item === null) {
-                    object.splice(index, 1);
-                }
-            });
-
-            console.log(values);
             callback(values);
         });
     });
