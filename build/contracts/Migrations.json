@@ -64,8 +64,8 @@
     "87234": {
       "events": {},
       "links": {},
-      "address": "0x9300e94708188ab718e2d4677c8499bd934100bc",
-      "updated_at": 1501415136860
+      "address": "0xa1650fb8c6f586c4e171d28c9f6bef85ca56695b",
+      "updated_at": 1501415483466
     },
     "1501324665836": {
       "events": {},
@@ -105,5 +105,5 @@
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1501415136860
+  "updated_at": 1501415483466
 }
