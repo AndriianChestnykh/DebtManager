@@ -16,6 +16,19 @@ router.get('/all', function (req,res){
     });
 });
 
+
+
+/**
+ * Get debts by order id
+ */
+router.get('/filter/byOrderId/:id', function (req,res){
+    console.log('# Get order');
+    funcs.getDebtByOrderId(req.params.id, function(response){
+        res.send(response);
+    });
+});
+
+
 /**
  * Get debt length
  */

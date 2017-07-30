@@ -89,18 +89,9 @@ router.get('/filter/byCompanyId/:companyId', function (req, res) {
         return;
     }
 
-    // TODO: replace this. fetch orders by companyId
-    var orders = [
-        {
-            id: 1,
-            details: "Radeon RX470 - 100 pcs",
-            moneyHolderAccount: "0x1234567890",
-            isFinalized: false,
-            owner: "0x2345678901"
-        }
-    ];
-
-    res.json({success: true, orders: orders});
+    funcs.getAllOrdersByCompanyId(function(response){
+        res.send(response);
+    })
 });
 
 module.exports = router;

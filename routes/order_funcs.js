@@ -90,6 +90,27 @@ function getAllOrders(callback) {
 );
 };
 
+function getAllOrdersByCompanyId(callback) {
+
+// THIS IS DIFFICULT 
+
+    var p = [];
+    getOrderLength(function(orderLength){
+    for (var i=0; i<orderLength; i++){
+        var a = new Promise((resolve, reject) => {
+            getOrderById(i, function(response){
+                resolve(response);
+            });
+        });
+        p.push(a);
+    }
+    Promise.all(p).then(values => { 
+        callback(values); 
+    });
+    }
+);
+};
+
 function finalizeOrderById (req, res) {
     var deployed;
     DebtManager.deployed()
@@ -109,5 +130,6 @@ module.exports = {
     getOrderById: getOrderById,
     finalizeOrderById: finalizeOrderById,
     getAllOrders: getAllOrders,
-    getOrderLength: getOrderLength
+    getOrderLength: getOrderLength,
+    getAllOrdersByCompanyId: getAllOrdersByCompanyId
 };

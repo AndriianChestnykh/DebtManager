@@ -71,6 +71,30 @@ function getDebtById(id, callback) {
         });
 };
 
+function getDebtByOrderId(id, callback) {
+
+    var p = [];
+    getDebtLength(function(length){
+    for (var i=0; i<length; i++){
+        var a = new Promise((resolve, reject) => {
+            getDebtById(i, function(response){
+                if (response.orderid == id){
+                    resolve(response);
+                }else{
+                    resolve(null);
+                }
+            });
+        });
+        p.push(a);
+    }
+
+    Promise.all(p).then(values => { 
+        callback(values); 
+    });
+    });
+
+};
+
 function getAllDebts(callback) {
 
     var p = [];
@@ -109,5 +133,6 @@ module.exports = {
     getDebtById: getDebtById,
     confirmDebt: confirmDebt,
     getAllDebts: getAllDebts,
-    getDebtLength: getDebtLength
+    getDebtLength: getDebtLength,
+    getDebtByOrderId:getDebtByOrderId
 };
