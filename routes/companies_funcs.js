@@ -24,37 +24,22 @@ function getAllCompanies(callback) {
     var p = [];
 
     for (var i = 0; i < 3; i++) {
-        var a = new Promise((resolve, reject) => {
-            getCompanyById(i, function (response) {
-                resolve(response);
-            });
-        });
+        var a = getCompanyById(i);
         p.push(a);
     }
     Promise.all(p).then(values => {
         callback(values);
     });
-
-    DebtManager.deployed()
-        .then(function (instance) {
-            deployed = instance;
-            return deployed.getOrderById.call(id);
-            // Do something with the result or continue with more transactions.
-        })
-
 }
 
 
-function getCompanyById(id, callback) {
+function getCompanyById(id) {
     var deployed;
-    DebtManager.deployed()
+    return DebtManager.deployed()
         .then(function (instance) {
             deployed = instance;
             return deployed.companies.call(id);
             // Do something with the result or continue with more transactions.
-        })
-        .then(function (response) {
-            callback(response);
         });
 }
 
