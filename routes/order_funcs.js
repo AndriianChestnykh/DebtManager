@@ -37,22 +37,22 @@ function createOrder(req, res) {
         });
 }
 
-function getOrderLength(callback) {
+function getOrderLength() {
     var deployed;
-    DebtManager.deployed()
+    return DebtManager.deployed()
         .then(function (instance) {
             deployed = instance;
             return deployed.getOrderLength.call();
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {
-            callback(response);
+            return response.toNumber();
         });
 }
 
-function getOrderById(id, callback) {
+function getOrderById(id) {
     var deployed;
-    DebtManager.deployed()
+    return DebtManager.deployed()
         .then(function (instance) {
             deployed = instance;
             return deployed.getOrderById.call(id);
@@ -60,57 +60,41 @@ function getOrderById(id, callback) {
         })
         .then(function (response) {
             //var parsedData = JSON.parse(response);
-            var a = {
+            return {
                 id: response[0].toNumber(),
                 details: response[1],
                 moneyHolderAccount: response[2],
                 isFinalized: response[3],
                 owner: response[4]
             };
-            callback(a);
         });
 }
 
 function getAllOrders(callback) {
-
     var p = [];
-    getOrderLength(function (orderLength) {
-            for (var i = 0; i < orderLength; i++) {
-                var a = new Promise((resolve, reject) => {
-                    getOrderById(i, function (response) {
-                        resolve(response);
-                    });
-                });
-                p.push(a);
-            }
-            Promise.all(p).then(values => {
-                callback(values);
-            });
+    getOrderLength().then(orderLength => {
+        for (var i = 0; i < orderLength; i++) {
+            var a = getOrderById(i);
+            p.push(a);
         }
-    );
+        Promise.all(p).then(values => {
+            callback(values);
+        });
+    });
 }
 
 function getAllOrdersByCompanyId(callback) {
-
-// THIS IS DIFFICULT 
-
     var p = [];
-    getOrderLength(function (orderLength) {
-            for (var i = 0; i < orderLength; i++) {
-                var a = new Promise((resolve, reject) => {
-                    getOrderById(i, function (response) {
-                        resolve(response);
-                    });
-                });
-                p.push(a);
-            }
-            Promise.all(p).then(values => {
-                callback(values);
-
-
-            });
+    getOrderLength().then(orderLength => {
+        for (var i = 0; i < orderLength; i++) {
+            var a = getOrderById(i);
+            p.push(a);
         }
-    );
+        Promise.all(p).then(values => {
+            // TODO: remove orders by other companies
+            callback(values);
+        });
+    });
 }
 
 function finalizeOrderById(req, res) {
