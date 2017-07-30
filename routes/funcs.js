@@ -48,6 +48,21 @@ function getOrderById(id, callback) {
         });
 };
 
+function getAllOrders(callback) {
+
+    var p1 = new Promise((resolve, reject) => {
+        getOrderById(id, function(){
+            resolve();
+        });
+    });
+
+    Promise.all([p1]).then(values => { 
+        console.log(values); 
+        callback();
+    });
+
+};
+
 function finalizeOrderById (req, res) {
     var deployed;
     DebtManager.deployed()
@@ -65,5 +80,6 @@ function finalizeOrderById (req, res) {
 module.exports = {
     createOrder: createOrder,
     getOrderById: getOrderById,
-    finalizeOrderById: finalizeOrderById
+    finalizeOrderById: finalizeOrderById,
+    getAllOrders: getAllOrders
 };

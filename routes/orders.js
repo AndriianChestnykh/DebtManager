@@ -6,11 +6,22 @@ var router = express.Router();
 var funcs = require('./funcs');
 
 /**
+ * Get all orders
+ */
+router.get('/all', function (req,res){
+    console.log('# Get order');
+    funcs.getAllOrders(function(){
+        res.send('test');
+    });
+});
+
+/**
  * Get orders
  */
 router.get('/:id', function (req,res){
-    funcs.getOrderById(req.params.id, function(id){
-        res.send(id);
+    console.log('# Get order');
+    funcs.getOrderById(req.params.id, function(response){
+        res.send(response);
     });
 });
 
@@ -37,16 +48,6 @@ router.put('/', function (req, res) {
 
 });
 
-
-/**
- * Get order
- */
-router.get('/:id', function (req, res) {
-
-    console.log('# Get order');
-    funcs.getOrderById(req.params.id);
-    
-});
 
 /**
  * Finalize order
