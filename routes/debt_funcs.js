@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../configs/config.json');
+var config = require('../config.json');
 var helper = require('../helpers/helper');
 var contractArtifact = require('../build/contracts/DebtManager.json');
 var Web3 = require('web3');
@@ -35,7 +35,7 @@ function createDebt (req, res) {
         .then(function (response) {
             res.send({debtid: response.toNumber()});
         });
-};
+}
 
 function getDebtLength(callback){
     var deployed;
@@ -48,7 +48,7 @@ function getDebtLength(callback){
         .then(function (response) {
             callback(response);
         });
-};
+}
 
 function getDebtById(id, callback) {
     var deployed;
@@ -66,11 +66,11 @@ function getDebtById(id, callback) {
                 companyaccount: response[2],
                 amount: response[3],
                 isagreed: response[4],
-                isFinalized; response[5]
-            }  
+                isFinalized: response[5]
+            };
             callback(a);
         });
-};
+}
 
 function getDebtByOrderId(id, callback) {
 
@@ -102,26 +102,26 @@ function getDebtByOrderId(id, callback) {
     });
     });
 
-};
+}
 
 function getAllDebts(callback) {
 
     var p = [];
     getDebtLength(function(length){
-    for (var i=0; i<length; i++){
-        var a = new Promise((resolve, reject) => {
-            getDebtById(i, function(response){
-                resolve(response);
+        for (var i=0; i<length; i++){
+            var a = new Promise((resolve, reject) => {
+                getDebtById(i, function(response){
+                    resolve(response);
+                });
             });
+            p.push(a);
+        }
+        Promise.all(p).then(values => {
+            callback(values);
         });
-        p.push(a);
-    }
-    Promise.all(p).then(values => { 
-        callback(values); 
-    });
-    }
-);
-};
+        }
+    );
+}
 
 function confirmDebt (req, res) {
     var deployed;
