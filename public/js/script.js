@@ -18,7 +18,7 @@ function getDebtsByOrderId(orderId) {
                     var checked= "<i class=\"fa fa-times text-danger\"></i>"
                 }
 
-                var newtr = "<tr><td>"+item.id+"</td><td>"+item.orderid+"</td><td>"+item.companyaccount+"</td><td>"+item.amount+"</td><td>"+checked+"</td></tr>";
+                var newtr = "<tr><td>"+item.id+"</td><td>"+item.orderid+"</td><td>"+item.companyName+"</td><td>"+item.amount+"</td><td>"+checked+"</td></tr>";
 
                 $("#popup").find('tbody').append(newtr);
             })
