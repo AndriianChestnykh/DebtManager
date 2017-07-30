@@ -79,6 +79,7 @@ router.get('/', function (req, res, next) {
 
             var debtList = [];
             var i = 1;
+            var currentDebt = 0;
 
             for (var key in debtsByCompany) {
                 debtList.push([
@@ -89,13 +90,14 @@ router.get('/', function (req, res, next) {
                     true
                 ]);
                 i++;
+                currentDebt += debtsByCompany[key];
             }
 
             //var debtList = [[ 2, 3, "0xbbb", 10, true],[4, 5, "0xbbb1111", 20, true]];
 
             res.render('index', {
                 companyId: companyAccount,
-                currentDebt: 1000,
+                currentDebt: currentDebt,
                 orderList: orderList,
                 debtList: debtList
             });
