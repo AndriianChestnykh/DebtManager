@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../configs/config.json')
+var config = require('../configs/config.json');
 var helper = require('../helpers/helper');
 var contractArtifact = require('../build/contracts/DebtManager.json');
 var Web3 = require('web3');
