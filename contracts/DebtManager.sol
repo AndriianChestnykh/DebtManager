@@ -33,7 +33,9 @@ contract DebtManager {
     Order[] orderArr; // array of orders
     Debt[] debtArr;
 
-
+    address constant address1 = 0xed9d02e382b34818e88b88a309c7fe71e65f419d;
+    address constant address2 = 0xdf659674ad3d74f110e6f6904212cb2fb097ab97;
+    address constant address3 = 0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff;
 
     //---------------------------------------------------
     // Functions
@@ -45,35 +47,35 @@ contract DebtManager {
         companies[2] = 'Company C';
 
         //new order
-        orderArr.push(Order(0, "in123897", "0xed9d02e382b34818e88b88a309c7fe71e65f419d", false,"0xed9d02e382b34818e88b88a309c7fe71e65f419d"));
-        orderArr.push(Order(1, "in123898", "0xed9d02e382b34818e88b88a309c7fe71e65f419d", false, "0xed9d02e382b34818e88b88a309c7fe71e65f419d"));
-        orderArr.push(Order(2, "in123899", "0xed9d02e382b34818e88b88a309c7fe71e65f419d", false, "0xed9d02e382b34818e88b88a309c7fe71e65f419d"));
+        orderArr.push(Order(0, "in123897", address1, false, address1));
+        orderArr.push(Order(1, "in123898", address1, false, address1));
+        orderArr.push(Order(2, "in123899", address1, false, address1));
 
 
-        orderArr.push(Order(3, "in223897", "0xdf659674ad3d74f110e6f6904212cb2fb097ab97", false, "0xed9d02e382b34818e88b88a309c7fe71e65f419d"));
-        orderArr.push(Order(4, "in223898", "0xdf659674ad3d74f110e6f6904212cb2fb097ab97", false, "0xed9d02e382b34818e88b88a309c7fe71e65f419d"));
-        orderArr.push(Order(5, "in223899", "0xdf659674ad3d74f110e6f6904212cb2fb097ab97", false, "0xed9d02e382b34818e88b88a309c7fe71e65f419d"));
+        orderArr.push(Order(3, "in223897", address2, false, address1));
+        orderArr.push(Order(4, "in223898", address2, false, address1));
+        orderArr.push(Order(5, "in223899", address2, false, address1));
 
-        orderArr.push(Order(6, "in323897", "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff", false, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff"));
-        orderArr.push(Order(7, "in323898", "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff", false, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff"));
-        orderArr.push(Order(8, "in323899", "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff", false, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff"));
+        orderArr.push(Order(6, "in323897", address3, false, address3));
+        orderArr.push(Order(7, "in323898", address3, false, address3));
+        orderArr.push(Order(8, "in323899", address3, false, address3));
 
         orderId=9;
 
         //new debts
 
-        debtArr.push(Debt(0, 0, "0xed9d02e382b34818e88b88a309c7fe71e65f419d", 100, false, "0xed9d02e382b34818e88b88a309c7fe71e65f419d"));
-        debtArr.push(Debt(1, 0, "0xdf659674ad3d74f110e6f6904212cb2fb097ab97", 20, false, "0xed9d02e382b34818e88b88a309c7fe71e65f419d"));
-        debtArr.push(Debt(2, 0, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff", 10, false, "0xed9d02e382b34818e88b88a309c7fe71e65f419d"));
+        debtArr.push(Debt(0, 0, address1, 100, false, address1));
+        debtArr.push(Debt(1, 0, address2, 20, false, address1));
+        debtArr.push(Debt(2, 0, address3, 10, false, address1));
 
 
-        debtArr.push(Debt(3, 1, "0xed9d02e382b34818e88b88a309c7fe71e65f419d", 100, false, "0xdf659674ad3d74f110e6f6904212cb2fb097ab97"));
-        debtArr.push(Debt(4, 1, "0xdf659674ad3d74f110e6f6904212cb2fb097ab97", 20, false, "0xdf659674ad3d74f110e6f6904212cb2fb097ab97"));
-        debtArr.push(Debt(5, 1, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff", 10, false, "0xdf659674ad3d74f110e6f6904212cb2fb097ab97"));
+        debtArr.push(Debt(3, 1, address1, 100, false, address2));
+        debtArr.push(Debt(4, 1, address2, 20, false, address2));
+        debtArr.push(Debt(5, 1, address3, 10, false, address2));
 
-        debtArr.push(Debt(6, 2, "0xed9d02e382b34818e88b88a309c7fe71e65f419d", 100, false, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff"));
-        debtArr.push(Debt(7, 2, "0xdf659674ad3d74f110e6f6904212cb2fb097ab97", 20, false, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff"));
-        debtArr.push(Debt(8, 2, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff", 10, false, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff"));
+        debtArr.push(Debt(6, 2, address1, 100, false, address3));
+        debtArr.push(Debt(7, 2, address2, 20, false, address3));
+        debtArr.push(Debt(8, 2, address3, 10, false, address3));
 
         debtId=9;
     }
