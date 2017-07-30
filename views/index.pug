@@ -41,7 +41,7 @@ block content
                     .ibox-content
 
                         h2  You current debt
-                        label  1000
+                        label=  currentDebt
                             i.fa.fa-dollar.fa-fw
 
           .row
@@ -61,16 +61,12 @@ block content
 
 
                           tbody
-                            tr
-                              td Company B
-                              td 200
-                                  i.fa.fa-dollar.fa-fw
+                            each item in debtList
+                                tr
+                                  td= item[2]
+                                  td= item[3]
+                                      i.fa.fa-dollar.fa-fw
 
-                            tr
-                                td Company C
-                                td.label-danger
-                                    lable -200
-                                        i.fa.fa-dollar.fa-fw
 
 
 
@@ -93,23 +89,18 @@ block content
                             th
 
                          tbody
-                          tr
-                            td 1
-                            td Sachin
-                            td.text-center
-                                i.fa.fa-check.text-success
-                            td
-                                button.btn.btn-link( type="button" data-toggle="modal" data-target="#details")
-                                    Details
-
-                          tr
-                            td 1
-                            td Transit
-                            td.text-center
-                                i.fa.fa-times.text-danger
-                            td
-                                button.btn.btn-link( type="button" data-toggle="modal" data-target="#details")
-                                    Details
+                            each item in orderList
+                                tr
+                                 td= item[0]
+                                 td= item[3]
+                                 td.text-center
+                                     if item[3] == true
+                                        i.fa.fa-check.text-success
+                                     else
+                                         i.fa.fa-times.text-danger
+                                 td
+                                     button.btn.btn-link(onclick="getDebtsByOrderId("+item[0]+")" type="button" data-toggle="modal" data-target="#details")
+                                         Details
 
 
             .modal.fade#details
@@ -121,7 +112,7 @@ block content
                         span(aria-hidden='true') ×
                     .modal-body
                       .table-responsive
-                        table.table.table-striped.table-hover
+                        table.table.table-striped.table-hover#popup
                           thead
                             tr
                               th Id
@@ -146,12 +137,13 @@ block content
             |  DebtManager © 2017
 
 
-
     // Mainly scripts
     script(src='js/jquery-2.1.1.js')
     script(src='js/bootstrap.min.js')
-    script(src='js/plugins/metisMenu/jquery.metisMenu.js')
-    script(src='js/plugins/slimscroll/jquery.slimscroll.min.js')
+    script(src='js/script.js')
+    //script(src='js/plugins/metisMenu/jquery.metisMenu.js')
+    //script(src='js/plugins/slimscroll/jquery.slimscroll.min.js')
     // Custom and plugin javascript
-    script(src='js/inspinia.js')
-    script(src='js/plugins/pace/pace.min.js')
+    //script(src='js/inspinia.js')
+    //script(src='js/plugins/pace/pace.min.js')
+
