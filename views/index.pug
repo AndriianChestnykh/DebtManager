@@ -91,15 +91,15 @@ block content
                          tbody
                             each item in orderList
                                 tr
-                                 td= item[0]
-                                 td= item[3]
+                                 td= item.id
+                                 td= item.moneyHolderAccount
                                  td.text-center
-                                     if item[3] == true
+                                     if item.isFinalized == true
                                         i.fa.fa-check.text-success
                                      else
                                          i.fa.fa-times.text-danger
                                  td
-                                     button.btn.btn-link(onclick="getDebtsByOrderId("+item[0]+")" type="button" data-toggle="modal" data-target="#details")
+                                     button.btn.btn-link(onclick="getDebtsByOrderId("+item.id+")" type="button" data-toggle="modal" data-target="#details")
                                          Details
 
 
