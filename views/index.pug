@@ -1,140 +1,142 @@
 extends layout
 
 block content
-    .row
-        nav.navbar.navbar-static-top.white-bg(role='navigation')
-            .navbar-header
-                button.navbar-toggle.collapsed(aria-controls='navbar', aria-expanded='false', data-target='#navbar', data-toggle='collapse', type='button')
-                    i.fa.fa-reorder
-                a.navbar-brand(href='#') DebtManager
-                ul.nav.navbar-nav
-                    li
-                        a(aria-expanded='false', role='button', href='index.html')  Company A
-                    li
-                        a(aria-expanded='false', role='button', href='#') Pending confirmation &nbsp;
-                            .badge.badge-danger 26
-                    li
-                        a(aria-expanded='false', role='button', href='#') Pending payment &nbsp;
-                            .badge.badge-danger 5
-                    li
-                        a(aria-expanded='false', role='button', href='#') Statistic
-                    li
-                        a(aria-expanded='false', role='button', href='#') Settings
+    .wrapper(style="background-color:rgba(105, 200, 35, 0.51);")
+        .row
+            nav.navbar.navbar-static-top.white-bg(role='navigation')
+                .navbar-header
+                    button.navbar-toggle.collapsed(aria-controls='navbar', aria-expanded='false', data-target='#navbar', data-toggle='collapse', type='button')
+                        i.fa.fa-reorder
+                    a.navbar-brand(href='#') DebtManager
+                    ul.nav.navbar-nav
+                        li
+                            a(aria-expanded='false', role='button', href='index.html')  Company A
+                        li
+                            a(aria-expanded='false', role='button', href='#') Pending confirmation &nbsp;
+                                .badge.badge-danger 26
+                        li
+                            a(aria-expanded='false', role='button', href='#') Pending payment &nbsp;
+                                .badge.badge-danger 5
+                        li
+                            a(aria-expanded='false', role='button', href='#') Statistic
+                        li
+                            a(aria-expanded='false', role='button', href='#') Settings
 
 
-            #navbar.navbar-collapse.collapse
+                #navbar.navbar-collapse.collapse
 
-                ul.nav.navbar-top-links.navbar-right
-                    li
-                       |Company A
+                    ul.nav.navbar-top-links.navbar-right
+                        li
+                           |Company A
 
-                    li
-                        a(href='#')
-                            i.fa.fa-sign-out
-                            |  Log out
+                        li
+                            a(href='#')
+                                i.fa.fa-sign-out
+                                |  Log out
 
-    .wrapper.wrapper-content
-        .container
-          .row
-            .col-md-12
-                .ibox
-                    .ibox-content
+        .wrapper.wrapper-content
+            .container
+              .row
+                .col-md-12
+                    .ibox
+                        .ibox-content
 
-                        h2  You current debt
-                        h2(style="font-weight:bold;")=  currentDebt
-                            i.fa.fa-dollar.fa-fw
+                            h2  You current debt
+                            h2(style="font-weight:bold;")=  currentDebt
+                                i.fa.fa-dollar.fa-fw
 
-          .row
-            .col-md-12
-                .ibox
-                    .ibox-content
-                      h2
-                          i.fa.fa-cubes.fa-fw
-                          |Your partner debts
+              .row
+                .col-md-12
+                    .ibox
+                        .ibox-content
+                          h2
+                              i.fa.fa-cubes.fa-fw
+                              |Your partner debts
 
-                      .table-responsive
-                        table.table.table-bordered.table-hover
-                          thead
-                            tr
-                              th Company
-                              th Balance
-
-
-                          tbody
-                            each item in debtList
+                          .table-responsive
+                            table.table.table-bordered.table-hover
+                              thead
                                 tr
-                                  td= item[2]
-                                  td= item[3]
-                                      i.fa.fa-dollar.fa-fw
+                                  th Company
+                                  th Balance
+
+
+                              tbody
+                                each item in debtList
+                                    tr
+                                      td= item[2]
+                                      td
+                                        h3= item[3]
+                                          i.fa.fa-dollar.fa-fw
 
 
 
 
 
-          .row
-            .col-md-12
-                .ibox
-                    .ibox-content
-                      h2
-                        i.fa.fa-list-alt.fa-fw
-                        |Order list
+              .row
+                .col-md-12
+                    .ibox
+                        .ibox-content
+                          h2
+                            i.fa.fa-list-alt.fa-fw
+                            |Order list
 
-                      .table-responsive
-                        table.table.table-bordered.table-hover
-                         thead
-                          tr
-                            th OrderId
-                            th MoneyHolderAccount
-                            th IsFinalized
-                            th
+                          .table-responsive
+                            table.table.table-bordered.table-hover
+                             thead
+                              tr
+                                th OrderId
+                                th MoneyHolderAccount
+                                th IsFinalized
+                                th
 
-                         tbody
-                            each item in orderList
+                             tbody
+                                each item in orderList
+                                    tr
+                                     td= item.id
+                                     td= item.moneyHolderName
+                                     td.text-center
+                                         if item.isFinalized == true
+                                            i.fa.fa-check.text-success
+                                         else
+                                             i.fa.fa-times.text-danger
+                                     td
+                                         button.btn.btn-link(onclick="getDebtsByOrderId("+item.id+")" type="button" data-toggle="modal" data-target="#details")
+                                             Details
+
+
+                .modal.fade#details
+                    .modal-dialog(role='document')
+                      .modal-content
+                        .modal-header
+                          h5.modal-title Order details
+                          button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                        .modal-body
+                          .table-responsive
+                            table.table.table-striped.table-hover#popup
+                              thead
                                 tr
-                                 td= item.id
-                                 td= item.moneyHolderName
-                                 td.text-center
-                                     if item.isFinalized == true
-                                        i.fa.fa-check.text-success
-                                     else
-                                         i.fa.fa-times.text-danger
-                                 td
-                                     button.btn.btn-link(onclick="showDebtsByOrderId("+item.id+")" type="button" data-toggle="modal" data-target="#details")
-                                         Details
+                                  th Id
+                                  th OrderId
+                                  th Company Acc
+                                  th Amount
+                                  th Agreed
 
-
-            .modal.fade#details
-                .modal-dialog(role='document')
-                  .modal-content
-                    .modal-header
-                      h5.modal-title Order details
-                      button.close(type='button', data-dismiss='modal', aria-label='Close')
-                        span(aria-hidden='true') ×
-                    .modal-body
-                      .table-responsive
-                        table.table.table-striped.table-hover#popup
-                          thead
-                            tr
-                              th Id
-                              th OrderId
-                              th Company Acc
-                              th Amount
-                              th Agreed
-
-                          tbody
-                            tr
-                              td 1
-                              td 2
-                              td Company 2
-                              td 10
-                              td
-                                i.fa.fa-check
-                    .modal-footer
-                      button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-    .footer
-        .text-center
-            strong Copyright
-            |  DebtManager © 2017
+                              tbody
+                                tr
+                                  td 1
+                                  td 2
+                                  td Company 2
+                                  td 10
+                                  td
+                                    i.fa.fa-check
+                        .modal-footer
+                          button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+        .footer
+            .text-center
+                strong Copyright
+                |  DebtManager © 2017
 
 
     // Mainly scripts
