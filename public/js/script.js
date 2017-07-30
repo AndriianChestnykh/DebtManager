@@ -1,5 +1,4 @@
-
-function getDebtsByOrderId(orderId) {
+function showDebtsByOrderId(orderId) {
 
     console.log(orderId);
     //Clear data table
@@ -31,6 +30,11 @@ function getDebtsByOrderId(orderId) {
     });
 }
 
+function showDebts(orders, debtsByOrders) {
+    // TODO: update table with debts
+    console.log(orders, debtsByOrders);
+}
+
 function check(id){
 
     $.ajax({
@@ -42,3 +46,42 @@ function check(id){
         }
     });
 }
+
+function getURL(url) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: url,
+            success: function (result) {
+                console.log(result);
+                resolve(result);
+            },
+            error: function () {
+                reject();
+            }
+        });
+    });
+}
+
+function getAllOrders() {
+    return getURL("/orders/all");
+}
+
+function getDebtsByOrderId(orderId) {
+    return getURL("/debts/filter/byOrderId/" + orderId);
+}
+
+function updateDebtsTable() {
+    getAllOrders().then(function (orders) {
+        var p = [];
+        orders.forEach(function(order) {
+            p.push(getDebtsByOrderId(order.id));
+        });
+        return Promise.all(p).then(debtsByOrders => {
+            showDebts(orders, debtsByOrders);
+        });
+    });
+}
+
+$(document).ready(function () {
+    updateDebtsTable();
+});
