@@ -118,11 +118,13 @@ contract DebtManager {
                                                         address companyAccount,
                                                         uint amount,
                                                         bool isAgreed,
-                                                        address moneyHolderAccount){
+                                                        address moneyHolderAccount,
+                                                        bool isFinalized){
 
         Debt debt = debtArr[debtId];
+        bool isFinalized = orderArr[debt.orderId];
 
-        return (debt.id, debt.orderId, debt.companyAccount, debt.amount, debt.isAgreed, debt.moneyHolderAccount);
+        return (debt.id, debt.orderId, debt.companyAccount, debt.amount, debt.isAgreed, debt.moneyHolderAccount, isFinalized);
     }
 
 }
