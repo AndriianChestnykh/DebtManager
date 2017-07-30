@@ -75,7 +75,7 @@ contract DebtManager {
         debtArr.push(Debt(7, 2, "0xdf659674ad3d74f110e6f6904212cb2fb097ab97", 20, false, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff"));
         debtArr.push(Debt(8, 2, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff", 10, false, "0xa1be6a760c7ea15ff1fd9bbe4f9291bc34196aff"));
 
-
+        debtId=9;
     }
 
 
