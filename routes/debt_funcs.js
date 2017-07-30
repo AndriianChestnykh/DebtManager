@@ -65,7 +65,8 @@ function getDebtById(id, callback) {
                 orderid: response[1],
                 companyaccount: response[2],
                 amount: response[3],
-                isagreed: response[4]
+                isagreed: response[4],
+                isFinalized; response[5]
             }  
             callback(a);
         });
