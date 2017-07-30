@@ -3,7 +3,7 @@
 var helper = require('../helpers/helper');
 var express = require('express');
 var router = express.Router();
-var funcs = require('./funcs');
+var funcs = require('./order_funcs');
 
 /**
  * Get all orders

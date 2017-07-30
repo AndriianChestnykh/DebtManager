@@ -3,31 +3,27 @@
 var helper = require('../helpers/helper');
 var express = require('express');
 var router = express.Router();
+var funcs = require('./debt_funcs');
+
 
 /**
- * Get debts
+ * Get all orders
  */
-router.get('/', function (req, res) {
+router.get('/all', function (req,res){
+    console.log('# Get all debts');
+    funcs.getAllDebts(function(response){
+        res.send(response);
+    });
+});
 
-    // TODO: replace this. get debts from contract
-    var debts = [
-        {
-            id: 1,
-            orderId: 1,
-            companyAccount: "0x1234567890",
-            amount: 1200,
-            isAgreed: false
-        },
-        {
-            id: 2,
-            orderId: 1,
-            companyAccount: "0x2345678901",
-            amount: 800,
-            isAgreed: false
-        }
-    ];
-
-    res.json({success: true, debts: debts});
+/**
+ * Get debt length
+ */
+router.get('/getdebtlength', function (req,res){
+    console.log('# Debt length');
+    funcs.getDebtLength(function(response){
+        res.send(response);
+    });
 });
 
 /**
@@ -52,21 +48,9 @@ router.put('/', function (req, res) {
         res.json(helper.getErrorMessage('amount'));
         return;
     }
-
-    var debt = {
-        id: null,
-        orderId: orderId,
-        companyAccount: companyAccount,
-        amount: amount,
-        isAgreed: false
-    };
-
-    // TODO: replace this. save debt and add id
-    debt.id = Math.floor(Math.random() * 1000);
-
-    res.json({success: true, debt: debt});
+    console.log(req);
+    funcs.createDebt(req,res);
 });
-
 
 /**
  * Get debt
@@ -74,24 +58,12 @@ router.put('/', function (req, res) {
 router.get('/:id', function (req, res) {
 
     console.log('# Get debt');
-
-    var id = helper.parsePositiveInt(req.params.id);
-    if (!id) {
-        res.json(helper.getErrorMessage('id'));
-        return;
-    }
-
-    // TODO: replace this. fetch debt
-    var debt = {
-        id: id,
-        orderId: 1,
-        companyAccount: "0x1234567890",
-        amount: 1200,
-        isAgreed: false
-    };
-
-    res.json({success: true, debt: debt});
+    funcs.getDebtById(req.params.id, function(response){
+        res.send(response);
+    });
 });
+
+
 
 /**
  * Agree on debt
@@ -106,16 +78,8 @@ router.post('/:id/agree', function (req, res) {
         return;
     }
 
-    // TODO: replace this. fetch debt and set isAgreed to true
-    var debt = {
-        id: id,
-        orderId: 1,
-        companyAccount: "0x1234567890",
-        amount: 1200,
-        isAgreed: true
-    };
+    funcs.confirmDebt(req, res);
 
-    res.json({success: true, debt: debt});
 });
 
 /**
