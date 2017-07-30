@@ -26,7 +26,7 @@ function createDebt (req, res) {
     DebtManager.deployed()
         .then(function (instance) {
             deployed = instance;
-            return deployed.createDebt(req.body.orderId, req.body.companyAccount, req.body.amount, {from: account, gas: 1000000});
+            return deployed.createDebt(req.body.orderId, req.body.companyAccount, req.body.amount, req.body.moneyHolder, {from: account, gas: 1000000});
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {
