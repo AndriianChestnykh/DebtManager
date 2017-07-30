@@ -9,7 +9,7 @@ contract DebtManager {
     struct Order{
         uint id;
         string details;
-        address moneyHolderAccount; // TODO:Name ??
+        address moneyHolderAccount;
         bool isFinalized;
         address owner;
 
@@ -23,6 +23,7 @@ contract DebtManager {
         address companyAccount;
         uint amount;
         bool isAgreed;
+        address moneyHolderAccount;
     }
 
     uint debtId; // auto increment unique id
@@ -52,12 +53,12 @@ contract DebtManager {
         return orderId++;
     }
 
-    function createDebt(uint orderId, address companyAccountress, uint amount) returns(uint){
+    function createDebt(uint orderId, address companyAccountress, uint amount,address moneyHolderAccount) returns(uint){
         //TODO: check if company in a company list
 
         //TODO: check if order id in the order list, probably with order index or just with index if we do not delete orders
 
-        debtArr.push(Debt(debtId, orderId, companyAccountress, amount, false));
+        debtArr.push(Debt(debtId, orderId, companyAccountress, amount, false, moneyHolderAccount));
 
         return debtId++;
     }
@@ -111,11 +112,12 @@ contract DebtManager {
                                                         uint orderId,
                                                         address companyAccount,
                                                         uint amount,
-                                                        bool isAgreed){
+                                                        bool isAgreed,
+                                                        address moneyHolderAccount){
 
         Debt debt = debtArr[debtId];
 
-        return (debt.id, debt.orderId, debt.companyAccount, debt.amount, debt.isAgreed);
+        return (debt.id, debt.orderId, debt.companyAccount, debt.amount, debt.isAgreed, debt.moneyHolderAccount);
     }
 
 }
