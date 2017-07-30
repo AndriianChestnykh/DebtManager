@@ -61,10 +61,10 @@ function getDebtById(id, callback) {
         .then(function (response) {
             //var parsedData = JSON.parse(response);
             var a = {
-                id: response[0],
-                orderid: response[1],
+                id: response[0].toNumber(),
+                orderid: response[1].toNumber(),
                 companyaccount: response[2],
-                amount: response[3],
+                amount: response[3].toNumber(),
                 isagreed: response[4],
                 isFinalized: response[5]
             };

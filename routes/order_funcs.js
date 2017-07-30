@@ -61,7 +61,7 @@ function getOrderById(id, callback) {
         .then(function (response) {
             //var parsedData = JSON.parse(response);
             var a = {
-                id: response[0],
+                id: response[0].toNumber(),
                 details: response[1],
                 moneyHolderAccount: response[2],
                 isFinalized: response[3],
