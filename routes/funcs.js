@@ -58,37 +58,35 @@ function getOrderById(id, callback) {
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {
-            callback(response);
+            //var parsedData = JSON.parse(response);
+            var a = {
+                id: response[0],
+                details: response[1],
+                moneyHolderAccount: response[2],
+                isFinalized: response[3],
+                owner: response[4]
+            }  
+            callback(a);
         });
 };
 
 function getAllOrders(callback) {
 
+    var p = [];
     getOrderLength(function(orderLength){
-        var p1 = new Promise((resolve, reject) => {
-            getOrderById(1, function(response){
+    for (var i=0; i<orderLength; i++){
+        var a = new Promise((resolve, reject) => {
+            getOrderById(i, function(response){
                 resolve(response);
             });
-        }); 
-        var p2 = new Promise((resolve, reject) => {
-            getOrderById(2, function(response){
-                resolve(response);
-            });
-        }); 
-        var p3 = new Promise((resolve, reject) => {
-            getOrderById(3, function(response){
-                resolve(response);
-            });
-        }); 
-
-        Promise.all([p1, p2, p3]).then(values => { 
-            callback(values); 
         });
+        p.push(a);
+    }
+    Promise.all(p).then(values => { 
+        callback(values); 
+    });
     }
 );
-    //Выведет: 
-    // [3, 1337, "foo"] 
-
 };
 
 function finalizeOrderById (req, res) {
