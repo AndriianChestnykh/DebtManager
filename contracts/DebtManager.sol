@@ -39,10 +39,10 @@ contract DebtManager {
 
     //Constructor
     function DebtManager() {
-
-        //TODO: predefine data
+        companies[0] = 'Company A';
+        companies[1] = 'Company B';
+        companies[2] = 'Company C';       
     }
-
 
 
     //Create
