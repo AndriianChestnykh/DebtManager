@@ -41,7 +41,7 @@ block content
                     .ibox-content
 
                         h2  You current debt
-                        label=  currentDebt
+                        h2(style="font-weight:bold;")=  currentDebt
                             i.fa.fa-dollar.fa-fw
 
           .row
@@ -92,7 +92,7 @@ block content
                             each item in orderList
                                 tr
                                  td= item.id
-                                 td= item.moneyHolderAccount
+                                 td= item.moneyHolderName
                                  td.text-center
                                      if item.isFinalized == true
                                         i.fa.fa-check.text-success
