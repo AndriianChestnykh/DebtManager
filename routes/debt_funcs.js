@@ -21,12 +21,15 @@ var deployed;
  *
  * **/
 
-function createDebt (req, res) {
+function createDebt(req, res) {
     var deployed;
     DebtManager.deployed()
         .then(function (instance) {
             deployed = instance;
-            return deployed.createDebt(req.body.orderId, req.body.companyAccount, req.body.amount, req.body.moneyHolder, {from: account, gas: 1000000});
+            return deployed.createDebt(req.body.orderId, req.body.companyAccount, req.body.amount, req.body.moneyHolder, {
+                from: account,
+                gas: 1000000
+            });
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {
@@ -37,7 +40,7 @@ function createDebt (req, res) {
         });
 }
 
-function getDebtLength(callback){
+function getDebtLength(callback) {
     var deployed;
     DebtManager.deployed()
         .then(function (instance) {
@@ -75,31 +78,31 @@ function getDebtById(id, callback) {
 function getDebtByOrderId(id, callback) {
 
     var p = [];
-    getDebtLength(function(length){
-    for (var i=0; i<length; i++){
-        var a = new Promise((resolve, reject) => {
-            getDebtById(i, function(response){
-                if (response.orderid == id){
-                    resolve(response);
-                }else{
-                    resolve(null);
+    getDebtLength(function (length) {
+        for (var i = 0; i < length; i++) {
+            var a = new Promise((resolve, reject) => {
+                getDebtById(i, function (response) {
+                    if (response.orderid == id) {
+                        resolve(response);
+                    } else {
+                        resolve(null);
+                    }
+                });
+            });
+            p.push(a);
+        }
+
+        Promise.all(p).then(values => {
+
+            values.forEach(function (item, index, object) {
+                if (item === null) {
+                    object.splice(index, 1);
                 }
             });
+
+            console.log(values);
+            callback(values);
         });
-        p.push(a);
-    }
-
-    Promise.all(p).then(values => {
-
-        values.forEach(function(item, index, object){
-            if (item === null) {
-                object.splice(index, 1);
-            }
-        });
-
-        console.log(values);
-        callback(values); 
-    });
     });
 
 }
@@ -107,29 +110,29 @@ function getDebtByOrderId(id, callback) {
 function getAllDebts(callback) {
 
     var p = [];
-    getDebtLength(function(length){
-        for (var i=0; i<length; i++){
-            var a = new Promise((resolve, reject) => {
-                getDebtById(i, function(response){
-                    resolve(response);
+    getDebtLength(function (length) {
+            for (var i = 0; i < length; i++) {
+                var a = new Promise((resolve, reject) => {
+                    getDebtById(i, function (response) {
+                        resolve(response);
+                    });
                 });
+                p.push(a);
+            }
+            Promise.all(p).then(values => {
+                callback(values);
             });
-            p.push(a);
-        }
-        Promise.all(p).then(values => {
-            callback(values);
-        });
         }
     );
 }
 
-function confirmDebt (req, res) {
+function confirmDebt(req, res) {
     var deployed;
     DebtManager.deployed()
         .then(function (instance) {
             deployed = instance;
 
-            return deployed.confirmDebt(req.params.id, {from: account, gas: 1000000});;
+            return deployed.confirmDebt(req.params.id, {from: account, gas: 1000000});
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {
@@ -143,5 +146,5 @@ module.exports = {
     confirmDebt: confirmDebt,
     getAllDebts: getAllDebts,
     getDebtLength: getDebtLength,
-    getDebtByOrderId:getDebtByOrderId
+    getDebtByOrderId: getDebtByOrderId
 };

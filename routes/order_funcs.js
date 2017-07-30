@@ -21,7 +21,7 @@ var deployed;
  *
  * **/
 
-function createOrder (req, res) {
+function createOrder(req, res) {
     var deployed;
     DebtManager.deployed()
         .then(function (instance) {
@@ -35,9 +35,9 @@ function createOrder (req, res) {
         .then(function (response) {
             res.send({orderid: response.toNumber()});
         });
-};
+}
 
-function getOrderLength(callback){
+function getOrderLength(callback) {
     var deployed;
     DebtManager.deployed()
         .then(function (instance) {
@@ -48,7 +48,7 @@ function getOrderLength(callback){
         .then(function (response) {
             callback(response);
         });
-};
+}
 
 function getOrderById(id, callback) {
     var deployed;
@@ -66,65 +66,65 @@ function getOrderById(id, callback) {
                 moneyHolderAccount: response[2],
                 isFinalized: response[3],
                 owner: response[4]
-            }  
+            };
             callback(a);
         });
-};
+}
 
 function getAllOrders(callback) {
 
     var p = [];
-    getOrderLength(function(orderLength){
-    for (var i=0; i<orderLength; i++){
-        var a = new Promise((resolve, reject) => {
-            getOrderById(i, function(response){
-                resolve(response);
+    getOrderLength(function (orderLength) {
+            for (var i = 0; i < orderLength; i++) {
+                var a = new Promise((resolve, reject) => {
+                    getOrderById(i, function (response) {
+                        resolve(response);
+                    });
+                });
+                p.push(a);
+            }
+            Promise.all(p).then(values => {
+
+                values.forEach(function (item) {
+                    item.id = helper.parsePositiveInt(item.id);
+                });
+
+                callback(values);
             });
-        });
-        p.push(a);
-    }
-    Promise.all(p).then(values => {
-
-        values.forEach(function(item){
-            item.id = helper.parsePositiveInt(item.id);
-        });
-
-        callback(values); 
-    });
-    }
-);
-};
+        }
+    );
+}
 
 function getAllOrdersByCompanyId(callback) {
 
 // THIS IS DIFFICULT 
 
     var p = [];
-    getOrderLength(function(orderLength){
-    for (var i=0; i<orderLength; i++){
-        var a = new Promise((resolve, reject) => {
-            getOrderById(i, function(response){
-                resolve(response);
+    getOrderLength(function (orderLength) {
+            for (var i = 0; i < orderLength; i++) {
+                var a = new Promise((resolve, reject) => {
+                    getOrderById(i, function (response) {
+                        resolve(response);
+                    });
+                });
+                p.push(a);
+            }
+            Promise.all(p).then(values => {
+                callback(values);
+
+
             });
-        });
-        p.push(a);
-    }
-    Promise.all(p).then(values => { 
-        callback(values);
+        }
+    );
+}
 
-
-    });
-    }
-);
-};
-
-function finalizeOrderById (req, res) {
+function finalizeOrderById(req, res) {
     var deployed;
     DebtManager.deployed()
         .then(function (instance) {
             deployed = instance;
 
-            return deployed.finalizeOrderById(req.params.id, {from: account, gas: 1000000});;
+            return deployed.finalizeOrderById(req.params.id, {from: account, gas: 1000000});
             // Do something with the result or continue with more transactions.
         })
         .then(function (response) {
