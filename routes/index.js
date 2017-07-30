@@ -6,21 +6,22 @@ var debtsFunc = require('./debt_funcs.js');
 var orderFunc = require('./order_funcs.js');
 
 
-var companyAccount = config.companyAccount;
+var companyAccount = config.account;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
     console.log("Init index");
 
+    var orderList = [];
+    var debtList = [];
+
   //Get all company debts
   debtsFunc.getAllDebts(function(debts){
       //filter only company debts
 
-      console.log("Orders");
+      console.log("Debts");
       console.log(debts);
-
-      var orderList = [];
 
       debts.forEach(function (item, index, object) {
 
@@ -28,6 +29,10 @@ router.get('/', function(req, res, next) {
               object.splice(index, 1);
           }
       });
+
+      debtList = debts;
+
+
 
       //Get all orders
 
@@ -42,8 +47,9 @@ router.get('/', function(req, res, next) {
 
               var removeFromTheList = true;
 
-              for(let item of debts){
-                  if(item.orderId === item.id){
+              for(var idebt of debts){
+
+                  if(idebt.orderId === item.id){
                       removeFromTheList = false;
                       break;
                   }
@@ -56,7 +62,9 @@ router.get('/', function(req, res, next) {
 
           orderList = orders;
 
+          console.log("Final list");
           console.log(orderList);
+
           var debtList = [[ 2, 3, "0xbbb", 10, true],[4, 5, "0xbbb1111", 20, true]];
 
           res.render('index', { currentDebt: 1000, orderList: orderList, debtList: debtList});
