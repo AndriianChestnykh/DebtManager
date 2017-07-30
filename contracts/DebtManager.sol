@@ -7,23 +7,23 @@ contract DebtManager {
     mapping(address => string) public companies;
 
     struct Order{
-        uint id;
-        string details;
-        address moneyHolderAccount;
-        bool isFinalized;
-        address owner;
+    uint id;
+    string details;
+    address moneyHolderAccount;
+    bool isFinalized;
+    address owner;
 
     }
 
     struct Debt{
 
-        uint id;
-        uint orderId;
+    uint id;
+    uint orderId;
 
-        address companyAccount;
-        uint amount;
-        bool isAgreed;
-        address moneyHolderAccount;
+    address companyAccount;
+    uint amount;
+    bool isAgreed;
+    address moneyHolderAccount;
     }
 
     uint debtId; // auto increment unique id
@@ -42,7 +42,7 @@ contract DebtManager {
     function DebtManager() {
         companies[0] = 'Company A';
         companies[1] = 'Company B';
-        companies[2] = 'Company C';       
+        companies[2] = 'Company C';
     }
 
 
@@ -59,9 +59,9 @@ contract DebtManager {
         //TODO: check if order id in the order list, probably with order index or just with index if we do not delete orders
         address holder = orderArr[orderId].moneyHolderAccount;
 
-        if(holder == 0){
-            throw;
-        }
+        // if(holder == 0){
+        //     throw;
+        // }
 
         debtArr.push(Debt(debtId, orderId, companyAccountress, amount, false, holder));
 
@@ -101,10 +101,10 @@ contract DebtManager {
     }
 
     function getOrderById(uint orderId) constant returns( uint id,
-                                                          string details,
-                                                          address moneyHolderAccount,
-                                                          bool isFinalized,
-                                                          address owner){
+    string details,
+    address moneyHolderAccount,
+    bool isFinalized,
+    address owner){
 
         Order order = orderArr[orderId];
 
@@ -113,18 +113,18 @@ contract DebtManager {
     }
 
     function getDebtById(uint debtId) constant returns(
-                                                        uint id,
-                                                        uint orderId,
-                                                        address companyAccount,
-                                                        uint amount,
-                                                        bool isAgreed,
-                                                        address moneyHolderAccount,
-                                                        bool isFinalized){
+    uint id,
+    uint orderId,
+    address companyAccount,
+    uint amount,
+    bool isAgreed,
+    address moneyHolderAccount,
+    bool isFinalized){
 
         Debt debt = debtArr[debtId];
-        bool isFinalized = orderArr[debt.orderId];
+        bool finalized = orderArr[debt.orderId].isFinalized;
 
-        return (debt.id, debt.orderId, debt.companyAccount, debt.amount, debt.isAgreed, debt.moneyHolderAccount, isFinalized);
+        return (debt.id, debt.orderId, debt.companyAccount, debt.amount, debt.isAgreed, debt.moneyHolderAccount, finalized);
     }
 
 }
